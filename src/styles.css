@@ -62,39 +62,45 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  --radius: 0.5rem;
+  --background: oklch(0.975 0.012 145);
+  --foreground: oklch(0.22 0.025 165);
+  --card: oklch(0.998 0.003 145);
+  --card-foreground: oklch(0.22 0.025 165);
+  --popover: oklch(0.998 0.003 145);
+  --popover-foreground: oklch(0.22 0.025 165);
+  --primary: oklch(0.48 0.13 156);
+  --primary-foreground: oklch(0.99 0.005 145);
+  --secondary: oklch(0.94 0.025 145);
+  --secondary-foreground: oklch(0.28 0.04 160);
+  --muted: oklch(0.95 0.013 145);
+  --muted-foreground: oklch(0.52 0.025 165);
+  --accent: oklch(0.91 0.12 104);
+  --accent-foreground: oklch(0.3 0.05 145);
+  --destructive: oklch(0.56 0.19 25);
+  --destructive-foreground: oklch(0.99 0.005 145);
+  --border: oklch(0.89 0.02 150);
+  --input: oklch(0.89 0.02 150);
+  --ring: oklch(0.58 0.12 155);
+  --chart-1: oklch(0.48 0.13 156);
+  --chart-2: oklch(0.72 0.13 104);
+  --chart-3: oklch(0.58 0.12 220);
+  --chart-4: oklch(0.66 0.16 35);
+  --chart-5: oklch(0.6 0.11 300);
+  --sidebar: oklch(0.24 0.035 165);
+  --sidebar-foreground: oklch(0.97 0.01 145);
+  --sidebar-primary: oklch(0.75 0.13 104);
+  --sidebar-primary-foreground: oklch(0.24 0.035 165);
+  --sidebar-accent: oklch(0.32 0.04 165);
+  --sidebar-accent-foreground: oklch(0.97 0.01 145);
+  --sidebar-border: oklch(0.37 0.035 165);
+  --sidebar-ring: oklch(0.75 0.13 104);
+  --positive: oklch(0.48 0.13 156);
+  --positive-soft: oklch(0.93 0.045 150);
+  --warning: oklch(0.68 0.15 75);
+  --warning-soft: oklch(0.96 0.055 95);
+  --ink-soft: oklch(0.38 0.025 165);
+  --night: oklch(0.24 0.035 165);
 }
 
 .dark {
@@ -140,5 +146,55 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: 0;
+    min-width: 320px;
+  }
+}
+
+@theme inline {
+  --color-positive: var(--positive);
+  --color-positive-soft: var(--positive-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-ink-soft: var(--ink-soft);
+  --color-night: var(--night);
+}
+
+.auth-shell {
+  background:
+    radial-gradient(ellipse at 15% 0%, color-mix(in oklab, var(--accent) 25%, transparent), transparent 42%),
+    var(--color-background);
+}
+
+.shop-shell {
+  min-height: 100svh;
+  padding-bottom: 5.5rem;
+}
+
+.shop-main {
+  margin-inline: auto;
+  max-width: 76rem;
+  padding: 1.5rem 1rem 2rem;
+}
+
+.surface-line {
+  border: 1px solid var(--color-border);
+  background: var(--color-card);
+}
+
+.soft-grid {
+  background-image: linear-gradient(var(--color-border) 1px, transparent 1px), linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(to bottom, black, transparent 92%);
+}
+
+@media (min-width: 768px) {
+  .shop-shell {
+    padding-bottom: 0;
+  }
+
+  .shop-main {
+    padding: 2rem 2rem 3rem;
   }
 }
