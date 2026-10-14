@@ -1,0 +1,3 @@
+- [x] Enable Cloud sign-in and create owner-scoped profile, product, and sales data with automatic stock reduction.
+- [ ] Build the phone-friendly sign-in, quick-sale, and inventory screens.
+- [ ] Verify a sale flow, responsive layout, and current build status.
