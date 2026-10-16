@@ -1,3 +1,4 @@
 - [x] Enable Cloud sign-in and create owner-scoped profile, product, and sales data with automatic stock reduction.
-- [ ] Build the phone-friendly sign-in, quick-sale, and inventory screens.
-- [ ] Verify a sale flow, responsive layout, and current build status.
+- [x] Build the phone-friendly sign-in, quick-sale, and inventory screens.
+- [x] Verify mobile sign-up/sign-in views, stock rule tests, and preview status.
+- [ ] Verify a real sale after a shop account is confirmed; blocked because no auth users exist yet and email confirmation is enabled.
