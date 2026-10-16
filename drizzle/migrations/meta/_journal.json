@@ -8,6 +8,13 @@
       "when": 1792009884666,
       "tag": "0000_create_shop_sales_inventory",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792159905889,
+      "tag": "0001_restrict_profile_trigger_function",
+      "breakpoints": true
     }
   ]
 }
