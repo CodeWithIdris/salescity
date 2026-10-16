@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore, type FormEvent, type ReactNode } from "react";
 import {
   ArrowDownRight,
   ArrowUpRight,
@@ -128,7 +128,7 @@ function AuthScreen() {
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
 
-  async function submit(event: React.FormEvent<HTMLFormElement>) {
+  async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
     setNotice("");
@@ -195,8 +195,8 @@ function AuthScreen() {
               <p className="mt-2 text-sm leading-6 text-muted-foreground">{mode === "signup" ? "Create your account and keep your shop’s sales and stock together." : "Your shop records are ready when you are."}</p>
             </div>
             <div className="mb-6 grid grid-cols-2 border-b border-border">
-              <button type="button" onClick={() => { setMode("signup"); setError(""); setNotice(""); }} className={`border-b-2 py-3 text-sm font-medium transition-colors ${mode === "signup" ? "border-primary text-foreground" : "border-transparent text-muted-foreground"}`}>Create account</button>
-              <button type="button" onClick={() => { setMode("login"); setError(""); setNotice(""); }} className={`border-b-2 py-3 text-sm font-medium transition-colors ${mode === "login" ? "border-primary text-foreground" : "border-transparent text-muted-foreground"}`}>Sign in</button>
+              <Button type="button" variant="ghost" onClick={() => { setMode("signup"); setError(""); setNotice(""); }} className={`h-11 rounded-none border-b-2 text-sm font-medium transition-colors ${mode === "signup" ? "border-primary text-foreground" : "border-transparent text-muted-foreground"}`}>Create account</Button>
+              <Button type="button" variant="ghost" onClick={() => { setMode("login"); setError(""); setNotice(""); }} className={`h-11 rounded-none border-b-2 text-sm font-medium transition-colors ${mode === "login" ? "border-primary text-foreground" : "border-transparent text-muted-foreground"}`}>Sign in</Button>
             </div>
             <form onSubmit={submit} className="space-y-4">
               {mode === "signup" && <>
@@ -293,9 +293,10 @@ function ShopApp({ user }: { user: User }) {
     setBusy(false);
   }
 
-  async function addProduct(event: React.FormEvent<HTMLFormElement>) {
+  async function addProduct(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
+    const formElement = event.currentTarget;
+    const form = new FormData(formElement);
     const name = String(form.get("name") ?? "").trim();
     const category = String(form.get("category") ?? "General").trim() || "General";
     const price = Number(form.get("price"));
@@ -310,7 +311,7 @@ function ShopApp({ user }: { user: User }) {
     if (productError) setError(productError.message);
     else {
       setNotice(`${name} added to your stock.`);
-      event.currentTarget.reset();
+      formElement.reset();
       setShowAddProduct(false);
       await refreshShop();
     }
@@ -367,12 +368,6 @@ function ShopApp({ user }: { user: User }) {
           <SummaryTile icon={<CircleAlert className="size-4" />} label="Running low" value={lowStock.length.toString()} detail={lowStock.length ? "Worth a top-up" : "All looking good"} warning={lowStock.length > 0} />
           <SummaryTile icon={<Wallet className="size-4" />} label="Average sale" value={todaySales.length ? naira.format(Math.round(todayRevenue / todaySales.length)) : naira.format(0)} detail="Today" />
         </section>
-
-        <div className="mb-5 flex border-b border-border md:hidden" role="tablist" aria-label="Shop pages">
-          <NavTab active={section === "sell"} onClick={() => setSection("sell")} icon={<ShoppingCart className="size-4" />} label="Sell" />
-          <NavTab active={section === "stock"} onClick={() => setSection("stock")} icon={<Boxes className="size-4" />} label="Stock" />
-          <NavTab active={section === "activity"} onClick={() => setSection("activity")} icon={<Clock3 className="size-4" />} label="Sales" />
-        </div>
 
         {error && <p role="alert" className="mb-4 rounded-md border border-destructive/20 bg-destructive/10 px-4 py-3 text-sm text-destructive">{error}</p>}
         {notice && <p role="status" className="mb-4 flex items-center gap-2 rounded-md border border-positive/20 bg-positive-soft px-4 py-3 text-sm text-positive"><Check className="size-4 shrink-0" />{notice}</p>}
@@ -438,15 +433,15 @@ function ShopNameEditor({ name, onSave }: { name: string; onSave: (value: string
   const [value, setValue] = useState(name);
   useEffect(() => setValue(name), [name]);
   if (editing) return <form className="flex min-w-0 items-center gap-1" onSubmit={(event) => { event.preventDefault(); onSave(value); setEditing(false); }}><Input aria-label="Shop name" value={value} onChange={(event) => setValue(event.target.value)} maxLength={80} className="h-8 w-36 px-2 text-xs sm:w-48" autoFocus /><Button type="submit" size="icon" variant="ghost" aria-label="Save shop name" className="size-8"><Check className="size-4" /></Button></form>;
-  return <button type="button" onClick={() => setEditing(true)} className="flex min-w-0 items-center gap-1.5 text-left text-sm font-medium"><span className="max-w-36 truncate sm:max-w-56">{name || "My shop"}</span><ChevronDown className="size-3.5 shrink-0 text-muted-foreground" /></button>;
+  return <Button type="button" variant="ghost" onClick={() => setEditing(true)} className="flex h-8 min-w-0 items-center gap-1.5 px-2 text-left text-sm font-medium"><span className="max-w-36 truncate sm:max-w-56">{name || "My shop"}</span><ChevronDown className="size-3.5 shrink-0 text-muted-foreground" /></Button>;
 }
 
-function SummaryTile({ icon, label, value, detail, positive = false, warning = false }: { icon: React.ReactNode; label: string; value: string; detail: string; positive?: boolean; warning?: boolean }) {
+function SummaryTile({ icon, label, value, detail, positive = false, warning = false }: { icon: ReactNode; label: string; value: string; detail: string; positive?: boolean; warning?: boolean }) {
   return <div className="surface-line min-w-0 rounded-lg p-3.5 sm:p-4"><div className={`mb-3 flex size-8 items-center justify-center rounded-md ${warning ? "bg-warning-soft text-warning" : positive ? "bg-positive-soft text-positive" : "bg-muted text-muted-foreground"}`}>{icon}</div><p className="text-xs text-muted-foreground">{label}</p><p className="mt-1 truncate text-xl font-semibold sm:text-2xl">{value}</p><p className={`mt-1 truncate text-[11px] ${warning ? "text-warning" : "text-muted-foreground"}`}>{detail}</p></div>;
 }
 
-function NavTab({ active, onClick, icon, label, compact = false }: { active: boolean; onClick: () => void; icon: React.ReactNode; label: string; compact?: boolean }) {
-  return <button type="button" role="tab" aria-selected={active} onClick={onClick} className={`flex min-h-14 flex-1 items-center justify-center gap-2 border-b-2 px-2 text-xs font-medium transition-colors ${compact ? "flex-col gap-1 py-2" : ""} ${active ? "border-primary text-primary" : "border-transparent text-muted-foreground"}`}>{icon}<span>{label}</span></button>;
+function NavTab({ active, onClick, icon, label, compact = false }: { active: boolean; onClick: () => void; icon: ReactNode; label: string; compact?: boolean }) {
+  return <Button type="button" variant="ghost" role="tab" aria-selected={active} onClick={onClick} className={`flex min-h-14 flex-1 items-center justify-center gap-2 rounded-none border-b-2 px-2 text-xs font-medium transition-colors ${compact ? "flex-col gap-1 py-2" : ""} ${active ? "border-primary text-primary" : "border-transparent text-muted-foreground"}`}>{icon}<span>{label}</span></Button>;
 }
 
 function ProductRow({ product, busy, onAdjust }: { product: Product; busy: boolean; onAdjust: (change: number) => void }) {
