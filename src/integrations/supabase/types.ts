@@ -14,6 +14,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_access_blocks: {
+        Row: {
+          blocked_at: string
+          message: string
+          user_id: string
+        }
+        Insert: {
+          blocked_at?: string
+          message: string
+          user_id: string
+        }
+        Update: {
+          blocked_at?: string
+          message?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       products: {
         Row: {
           category: string
