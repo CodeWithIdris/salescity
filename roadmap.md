@@ -2,3 +2,4 @@
 - [x] Build the phone-friendly sign-in, quick-sale, and inventory screens.
 - [x] Verify mobile sign-up/sign-in views, stock rule tests, and preview status.
 - [ ] Verify a real sale after a shop account is confirmed; blocked because no auth users exist yet and email confirmation is enabled.
+- [ ] Add an authenticated AI-assisted sale draft that owners review and confirm before recording.
