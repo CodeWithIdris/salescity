@@ -11,3 +11,4 @@
 
 ## Application architecture
 - Keep the shop workflow on the public home route with session-aware sign-in and account states; browser data access is protected by per-user row-level policies, and inventory is decremented by a database trigger when a sale is inserted so the update stays atomic.
+- Keep one-shot Lovable AI Gateway calls in authenticated `createServerFn` functions with prompts and provider setup in server-only modules, so private credentials never reach the browser and user-confirmed writes remain protected.
